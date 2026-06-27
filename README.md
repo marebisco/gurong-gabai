@@ -4,8 +4,8 @@
 
 Gurong GabAI is a web-based application that builts to help the public school teachers to create a lesson plans that aligned with current DepEd curricula and formats in a fraction of the time it normally takes. Teachers can select a grade level, subject, topic, curriculum basis, academic calendar, and lesson plan format, and the system generates and regenerates a complete and editable draft using AI.
 
-> **Academic Project Notice:**
-> This is a student project built for academic purposes only (BSIT). It currently runs on a local development environment (XAMPP) and has not been deployed to production. AI-generated lesson plans are drafts only and should always be reviewed by a teacher before using it in the classroom.
+> **Notice:**
+> It currently runs on a local development environment (XAMPP) and has not been deployed to production. AI-generated lesson plans are drafts only and should always be reviewed by a teacher before using it in the classroom.
 
 ---
 
