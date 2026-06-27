@@ -1,157 +1,132 @@
-# Gurong GabAI — Update v3 (June 2026)
-## AI-Powered Lesson Plan Generator — ADET Project
+# Gurong GabAI 🎓
+
+**An AI-Powered Lesson Plan Generator for Filipino Public School Teachers**
+
+Gurong GabAI is a web-based application that builts to help the public school teachers to create a lesson plans that aligned with current DepEd curricula and formats in a fraction of the time it normally takes. Teachers can select a grade level, subject, topic, curriculum basis, academic calendar, and lesson plan format, and the system generates and regenerates a complete and editable draft using AI.
+
+> **Notice:**
+> It currently runs on a local development environment (XAMPP) and has not been deployed to production. AI-generated lesson plans are drafts only and should always be reviewed by a teacher before using it in the classroom.
 
 ---
 
-## 📦 Files in This Update Package
+## Features
 
-| File | Replace At | What Changed |
-|---|---|---|
-| `gemini.php` | `config/gemini.php` | ILAW format, 3 curricula, 5 backup AI models, format-specific prompts |
-| `generator_index.php` | `modules/generator/index.php` | ILAW in dropdown, auto-curriculum detection, format-aware UI |
-| `view.php` | `modules/generator/view.php` | Format-aware section labels (THE BIG FIX) |
-| `database_setup.sql` | Replace your old one | ILAW in ENUMs, TEXT columns, history table, migration script |
-
----
-
-## 🚀 Deployment Steps
-
-### If this is a fresh install:
-1. Open **phpMyAdmin** → create database `gurong_gabai_db`
-2. Import `database_setup.sql` (only the top CREATE TABLE section)
-3. Copy all PHP files to their correct locations (see table above)
-
-### If you already have the database (MIGRATION):
-1. Open **phpMyAdmin** → `gurong_gabai_db` → SQL tab
-2. Run **ONLY the bottom migration section** of `database_setup.sql` (after the "MIGRATION SCRIPT" comment)
-3. Replace the PHP files
+- Secure registration with email OTP verification and admin approval workflow
+- AI-generated lesson plans in **7 formats**: ILAW, DLP, 4A's, 5E's, Traditional, Semi-Detailed, and DLL
+- Support for **MATATAG** and **K-12 Senior High School** curricula, with separate Four-Quarter / Three-Term academic calendar selection
+- Multi-model AI fallback that automatically retries with backup AI models if the primary one fails
+- Resource Library with save, export (PDF/DOCX), Trash (soft-delete and hard-delete), and Generated History
+- System Admin Panel for approving, rejecting, deactivating, or removing teacher accounts
+- Light and dark mode
 
 ---
 
-## 🔬 Research Findings: DepEd Curricula & ILAW Format
+## Tech Stack
 
-### DepEd Curricula Currently in Use (SY 2026-2027)
+| Layer | Technology |
+|---|---|
+| Frontend | HTML, CSS, JavaScript (no framework) |
+| Backend | PHP (procedural, with MySQLi prepared statements) |
+| Database | MySQL |
+| AI Integration | [OpenRouter](https://openrouter.ai) API → *OpenAI's GPT-4o-Mini* (with backup models *Google's Gemini 3 Flash Preview* and *Meta's Llama 3.1 8B*) |
+| Email | PHPMailer via Gmail SMTP |
 
-| Curriculum | Grades | Status |
-|---|---|---|
-| **MATATAG + Three-Term (ILAW)** | Kinder – Grade 9 | ✅ CURRENT (SY 2026-2027) |
-| **K-12** | Grades 10, 11, 12 | ✅ Still in use (Grade 10 transitions SY 2027-2028) |
-| **MATATAG (old quarterly)** | Kinder – Grade 9 | Phased out; replaced by Three-Term SY 2026-2027 |
-
-**What happened:** DepEd shifted to a **Three-Term School Calendar** (DO No. 9, s. 2026) starting SY 2026-2027. The old 4-quarter system is replaced with 3 terms. This required a new lesson plan format — the **ILAW Format**.
-
----
-
-### 📋 The ILAW Format (DepEd Order No. 16, s. 2026)
-
-**ILAW** = **I**ntentions · **L**earning Experiences · **A**ssessment · **W**ays Forward
-
-The ILAW format is the **new official lesson plan format** for SY 2026-2027, replacing both the DLP and DLL for public school teachers teaching Kinder–Grade 9. Key features:
-
-#### I — INTENTIONS
-- Learning Competency (from MATATAG Three-Term Budget of Work)
-- Content Standard & Performance Standard
-- Session objectives (Knowledge, Skills, Attitude/Values)
-- **Learner Context** — describe actual learners' strengths and barriers
-
-#### L — LEARNING EXPERIENCES
-- Pre-Lesson: warm-up / review / hook activity
-- Main Lesson: detailed teaching-learning flow using evidence-based design
-  - Guided by 8 Evidence-Based Learning Design Principles
-  - Uses frameworks: 4A's, 4I's (Introduce, Interact, Integrate, Internalize), or 4C's
-- Integration & Differentiation: cross-curricular connections, inclusion strategies
-
-#### A — ASSESSMENT
-- Formative assessment embedded throughout (not just at the end)
-- Evidence of learning to be collected and used
-- Summative if applicable
-
-#### W — WAYS FORWARD
-- **Remediation plan** for learners who did not meet the objective
-- **Enrichment activity** for advanced learners
-- Teacher's reflection prompts
-- **AI Use Declaration** (new requirement: if AI was used to draft the plan, declare it!)
-
-#### Key differences from DLP:
-- The ILAW format is **shorter and more flexible** than DLP
-- It requires a **Learner Context** section (DLP did not)
-- It requires **Ways Forward** (remediation + enrichment) — DLP had this as optional
-- It has an **AI Use Declaration** requirement
+No frontend/backend framework or dedicated AI/ML framework was used. AI access is a direct HTTP API call from the PHP backend to OpenRouter.
 
 ---
 
-### What curricula do OTHER teachers use? (For your system's flexibility)
+## Getting Started
 
-Many teachers — especially private schools, ALS, and SHS teachers — still use formats not tied to MATATAG or K-12:
+### Requirements
 
-| Format | Who Uses It | Curriculum Basis |
-|---|---|---|
-| **ILAW** | Public school teachers (Kinder-Gr.9), SY 2026-2027 | MATATAG Three-Term |
-| **DLP** | New public school teachers, traditional schools | MATATAG or K-12 |
-| **DLL** | Experienced public school teachers | MATATAG or K-12 |
-| **4A's** | Most popular across all school types | Any curriculum |
-| **5E's** | Science, Math teachers (inquiry-based) | Any curriculum |
-| **Traditional** | Private schools, older teachers | Any curriculum |
-| **Semi-Detailed** | Experienced teachers, private schools | Any curriculum |
+- [XAMPP](https://www.apachefriends.org/) (or any Apache + MySQL + PHP stack)
+- A free [OpenRouter](https://openrouter.ai/) account and API key
+- A Gmail account with an [App Password](https://myaccount.google.com/apppasswords) generated (for sending OTP/notification emails)
+- [Composer](https://getcomposer.org/) (to install PHPMailer)
 
-**Our system now supports ALL of these with ALL curricula combinations.** A teacher can pick any combination — e.g., "4A's format with MATATAG curriculum" or "Traditional format with K-12" — and the AI will generate accordingly.
+### 1. Clone the repository
 
----
-
-## 🐛 Bugs Fixed in This Update
-
-### Bug 1: All formats showed the SAME section labels ❌ → ✅
-**Problem:** `view.php` had hardcoded section labels:
-```php
-$sections = [
-    'learning_objectives' => 'Learning Objectives',  // Always same!
-    ...
-];
+```bash
+git clone https://github.com/<your-username>/gurong-gabai.git
 ```
-A teacher who generated an ILAW plan would see "Learning Objectives" instead of "I. INTENTIONS". A 4A's plan would show "Lesson Body" instead of "ACTIVITY + ANALYSIS".
 
-**Fix:** `view.php` now reads the stored `format` from the database and calls `getSectionLabels($stored_format)` to get the correct labels for each format.
+Place the folder inside your XAMPP `htdocs` directory (e.g., `C:\xampp\htdocs\gurong-gabai`).
 
-### Bug 2: AI generated same generic content regardless of format ❌ → ✅
-**Problem:** The old `generateLessonPlan()` function sent the same prompt structure for all formats. The AI received different section *labels* but the same *instructions*, so DLP and 4A's would generate nearly identical content.
+### 2. Install PHP dependencies
 
-**Fix:** `gemini.php` now has a `buildPrompt()` function with a **different prompt for each format**. ILAW gets an ILAW-specific prompt, 4A's gets a 4A's-specific prompt, etc. The AI now truly understands what each format requires.
+From inside the project folder:
 
-### Bug 3: ILAW format not available ❌ → ✅
-**Problem:** No ILAW format existed in the dropdown or database.
+```bash
+composer install
+```
 
-**Fix:** Added ILAW everywhere — `getLessonPlanFormats()`, `getSectionLabels()`, the database ENUM, and the generator UI.
+This installs PHPMailer into the `vendor/` folder.
 
-### Bug 4: Curriculum dropdown only had 2 options, no ILAW ❌ → ✅
-**Problem:** The old dropdown had `MATATAG` and `K-12` but not the new `ILAW/Three-Term` curriculum.
+### 3. Set up the database
 
-**Fix:** Added `ILAW` as the third curriculum option. It auto-selects when the teacher picks Kinder-Grade 9 (since these are the grades under the Three-Term system for SY 2026-2027).
+1. Start Apache and MySQL in the XAMPP Control Panel.
+2. Open [phpMyAdmin](http://localhost/phpmyadmin) and create a new database named `gurong_gabai_db`.
+3. Import `database_setup.sql` into that database.
 
-### Bug 5: No backup AI models for reliability ❌ → ✅ (already done previously, now improved)
-**Problem:** If the primary model (Gemini 2.0 Flash) failed, the system crashed.
+### 4. Configure your API key and email credentials
 
-**Fix:** Now tries 5 models in order:
-1. `google/gemini-2.0-flash` (primary, fast)
-2. `google/gemini-flash-1.5` (fallback)
-3. `openai/gpt-4o-mini` (fallback)
-4. `anthropic/claude-haiku` (fallback)
-5. `meta-llama/llama-3.1-8b-instruct` (free tier fallback)
+This repo does **not** include real API keys or passwords — you'll need to create your own local config files from the provided templates.
 
----
+1. Copy `config/gemini.example.php` → `config/gemini.php`
+2. Open `config/gemini.php` and replace the placeholder with your own [OpenRouter API key](https://openrouter.ai/keys):
+   ```php
+   define('OPENROUTER_API_KEY', 'your-actual-key-here');
+   ```
+3. Copy `config/mailer.example.php` → `config/mailer.php`
+4. Open `config/mailer.php` and fill in your own Gmail address and [App Password](https://myaccount.google.com/apppasswords):
+   ```php
+   define('GMAIL_ADDRESS', 'your-email@gmail.com');
+   define('GMAIL_APP_PASSWORD', 'your-16-character-app-password');
+   ```
 
-## 💡 For Your ADET Documentation
+> `config/gemini.php` and `config/mailer.php` are listed in `.gitignore` and will never be committed — only the `.example.php` templates are tracked in this repo. Never paste real keys into the `.example.php` files.
 
-### Key Technical Points to Highlight
-- **AI Integration:** Uses OpenRouter API as a unified gateway to multiple AI models (Google Gemini, OpenAI GPT-4o-mini, Anthropic Claude, Meta Llama)
-- **Failover Architecture:** 5-model cascade ensures near-100% uptime even if one provider has downtime
-- **Format-Specific Prompting:** Each lesson plan format has a custom-engineered AI prompt — not just different labels but truly different content structure
-- **DepEd Alignment:** Supports the newest ILAW format (DO No. 16, s. 2026), MATATAG curriculum, and K-12 — covering all current Philippine public and private school needs
-- **Curriculum-Aware Auto-Detection:** The system automatically suggests the correct curriculum based on the selected grade level
+### 5. Run it
 
-### Tagline / Pitch (for your marketing copy)
-> "Gurong GabAI helps teachers create lesson plans in different formats, including the **ILAW Format** for the new DepEd Three-Term System. No more complicated prompts. No more copy-paste struggles."
+Visit `http://localhost/gurong-gabai/` in your browser. Register a teacher account, verify the OTP sent to your email, then manually approve that account in the database (set its `role` to `admin` and `status` to `approved` in the `teachers` table) so you have at least one working admin account to approve future teachers through the UI.
 
 ---
 
-## ⚠️ Important Reminder
-Your **OpenRouter API key** is currently hardcoded in `config/gemini.php`. This is fine for development/localhost, but before going live or uploading to GitHub, move it to a `.env` file or to a separate `config/keys.php` that is in `.gitignore`.
+## Project Structure
+
+```
+gurong-gabai/
+├── config/              # App configuration (gemini.php, mailer.php, db.php, session.php)
+├── modules/
+│   ├── auth/             # Registration, login, OTP, password reset
+│   ├── generator/         # AI lesson plan generator
+│   ├── library/           # Saved lesson plans
+│   ├── history/           # Generation activity log
+│   ├── trash/             # Soft-deleted lesson plans
+│   ├── admin/             # Account approval and management
+│   ├── export/            # PDF and DOCX export
+│   └── profile/           # Teacher profile settings
+├── includes/             # Shared header/footer/sidebar templates
+├── assets/               # CSS and static files
+└── database_setup.sql    # Database schema
+```
+
+---
+
+## Security Notes
+
+This project implements several security practices, including BCrypt password hashing, prepared statements (SQL injection protection), role-based access control, email OTP verification, secure session handling, and login rate limiting. See the project documentation for a full breakdown.
+
+---
+
+## Author
+
+**Mary Anne B. Purawan**
+
+Academic Project for Application Development and Emerging Technologies (ADET).
+
+---
+
+## License
+
+This project was created for academic purposes. Feel free to explore the code, but please don't use it commercially without permission.
