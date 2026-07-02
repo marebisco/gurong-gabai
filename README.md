@@ -92,27 +92,6 @@ Visit `http://localhost/gurong-gabai/` in your browser. Register a teacher accou
 
 ---
 
-## Project Structure
-
-```
-gurong-gabai/
-├── config/              # App configuration (gemini.php, mailer.php, db.php, session.php)
-├── modules/
-│   ├── auth/             # Registration, login, OTP, password reset
-│   ├── generator/         # AI lesson plan generator
-│   ├── library/           # Saved lesson plans
-│   ├── history/           # Generation activity log
-│   ├── trash/             # Soft-deleted lesson plans
-│   ├── admin/             # Account approval and management
-│   ├── export/            # PDF and DOCX export
-│   └── profile/           # Teacher profile settings
-├── includes/             # Shared header/footer/sidebar templates
-├── assets/               # CSS and static files
-└── database_setup.sql    # Database schema
-```
-
----
-
 ## Security Notes
 
 This project implements several security practices, including BCrypt password hashing, prepared statements (SQL injection protection), role-based access control, email OTP verification, secure session handling, and login rate limiting. See the project documentation for a full breakdown.
