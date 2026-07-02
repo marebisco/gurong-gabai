@@ -1,6 +1,6 @@
 # Gurong GabAI 🎓
 
-**An AI-Powered Lesson Plan Generator for Filipino Public School Teachers**
+**An AI-Powered Lesson Plan Generator**
 
 Gurong GabAI is a web-based application that builts to help the public school teachers to create a lesson plans that aligned with current DepEd curricula and formats in a fraction of the time it normally takes. Teachers can select a grade level, subject, topic, curriculum basis, academic calendar, and lesson plan format, and the system generates and regenerates a complete and editable draft using AI.
 
